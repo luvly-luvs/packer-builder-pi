@@ -1,0 +1,19 @@
+{
+  "name": "packer-builder-pi",
+  "version": "0.0.1",
+  "description": "Packer & Pi-Gen pipeline for building Pi images",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luvly-luvs/packer-builder-pi.git"
+  },
+  "author": "",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/luvly-luvs/packer-builder-pi/issues"
+  },
+  "homepage": "https://github.com/luvly-luvs/packer-builder-pi#readme"
+}

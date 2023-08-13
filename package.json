@@ -4,10 +4,10 @@
   "description": "Packer & Pi-Gen pipeline for building Pi images",
   "main": "index.ts",
   "scripts": {
-    "build:pre": "cp -u packer/bin/packer-builder-arm packer/ && git clone ",
-    "build": "make images",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "build:pre": "git clone --branch arm64 git@github.com:RPi-Distro/pi-gen.git tmp/pi-gen",
+    "build:ci": "npm run build:pre && make images",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",

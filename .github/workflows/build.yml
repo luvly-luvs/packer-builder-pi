@@ -20,7 +20,7 @@ jobs:
       - name: Setup Packer
         uses: hashicorp-contrib/setup-packer@v1
       - name: Setup Node
-        uses: buildjet/setup-node@v2
+        uses: buildjet/setup-node@v3
         with:
           node-version: 18
           cache: npm

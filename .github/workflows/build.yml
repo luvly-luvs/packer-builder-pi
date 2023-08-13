@@ -42,7 +42,8 @@ jobs:
         run: |
           cd packer
           packer init .
-          echo "$IMG_NAME"
+          source ./config
+          echo $IMG_NAME
           packer build \
           -var source_iso_url=./pi-gen/deploy/"$IMG_NAME" \
           -var source_iso_checksum=$(cut -d' ' -f1 < ./pi-gen/deploy/"$IMG_NAME".sha256) \

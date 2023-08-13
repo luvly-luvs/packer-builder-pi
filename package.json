@@ -4,6 +4,8 @@
   "description": "Packer & Pi-Gen pipeline for building Pi images",
   "main": "index.ts",
   "scripts": {
+    "build:pre": "cp -u packer/bin/packer-builder-arm packer/ && git clone ",
+    "build": "make images",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,5 +17,7 @@
   "bugs": {
     "url": "https://github.com/luvly-luvs/packer-builder-pi/issues"
   },
-  "homepage": "https://github.com/luvly-luvs/packer-builder-pi#readme"
+  "devDependencies": {
+    "husky": "^8.0.3"
+  }
 }

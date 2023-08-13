@@ -1,8 +1,11 @@
 on: push
 name: Build Image
+env:
+  generate-key: generate-arm64-${{ github.run_id }}
+  build-key: build-arm64-${{ github.run_id }}
 jobs:
-  build:
-    name: Build
+  generate:
+    name: Generate
     runs-on: buildjet-2vcpu-ubuntu-2204-arm
     defaults:
       run:
@@ -15,32 +18,29 @@ jobs:
       - name: Checkout Pi-Gen Repository
         uses: actions/checkout@v3
         with:
-          path: pi-gen
+          path: .
           repository: RPi-Distro/pi-gen
           ref: arm64
 
-      - name: Setup Packer
-        uses: hashicorp-contrib/setup-packer@v2
+      - name: List cwd
+        run: ls -ah1
 
       - name: Install Build Dependencies
         run: |
           sudo apt-get update
           xargs sudo apt-get install -f <depends.txt
 
-      - name: Move Build Files
-        run: |
-          cp config pi-gen/
-          mv Makefile pi-gen/
-
       - name: Make Image
         run: make
-        working-directory: ./pi-gen
+
+      - name: Setup Packer
+        uses: hashicorp-contrib/setup-packer@v2
 
       - name: Pack Image
         run: |
           . config
           echo "$IMG_NAME"
-          ISO_URL="./pi-gen/deploy/$IMG_NAME"
+          ISO_URL="./pi-gen/deploy/$IMG_NAME.img"
           ISO_CHECKSUM=$(cut -d' ' -f1 <"$ISO_URL".sha256)
           packer init ./packer
           packer build \
@@ -48,8 +48,11 @@ jobs:
             -var source_iso_checksum="$ISO_CHECKSUM" \
             ./packer
 
-      - name: Upload Image
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: arm64-image-${{ github.run_id }}
-          path: packer/*_arm64.img
+          name: ${{ env.generate-key}}
+          path: |
+            packer/*.img
+            deploy/*.img
+            deploy/*.sha256

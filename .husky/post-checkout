@@ -1,8 +1,0 @@
-#!/usr/bin/env sh
-repo_root="$(git rev-parse --show-toplevel)"
-
-. "$(dirname -- "$0")/_/husky.sh"
-
-cp -f "$repo_root"/packer/bin/* "$repo_root"/packer/
-
-unset repo_root

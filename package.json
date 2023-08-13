@@ -4,21 +4,20 @@
   "description": "Packer & Pi-Gen pipeline for building Pi images",
   "main": "index.ts",
   "scripts": {
-    "prepare": "husky install",
-    "build:pre": "git clone --branch arm64 git@github.com:RPi-Distro/pi-gen.git tmp/pi-gen",
-    "build:ci": "npm run build:pre && make images",
+    "install:apt": "xargs sudo apt-get install <depends.txt",
+    "install:pi-gen": "git clone --branch arm64 git@github.com:RPi-Distro/pi-gen.git tmp/pi-gen",
+    "install:node": "rm -rf node_modules && npm i",
+    "build:nuke": "rm -rf tmp deploy && mkdir tmp deploy",
+    "build:ci": "npm run build:nuke && make images",
+    "build:local": "npm run build:nuke && npm run install:pi-gen && make images",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/luvly-luvs/packer-builder-pi.git"
   },
-  "author": "",
   "license": "UNLICENSED",
   "bugs": {
     "url": "https://github.com/luvly-luvs/packer-builder-pi/issues"
-  },
-  "devDependencies": {
-    "husky": "^8.0.3"
   }
 }

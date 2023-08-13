@@ -1,0 +1,10 @@
+{
+  "files.associations": {
+    "config-*": "shellscript",
+    "config": "shellscript"
+  },
+  "material-icon-theme.files.associations": {
+    "config-*": "console",
+    "config": "console"
+  }
+}

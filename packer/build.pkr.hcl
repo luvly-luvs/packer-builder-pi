@@ -7,10 +7,17 @@ locals {
   etc_hosts = "sed -i \"s/raspberrypi/$(hostname)/\" /etc/hosts"
 
   builds = [
-    "source.arm-image.prod",
-    "source.arm-image.uat",
-    "source.arm-image.dev"
+    "source.arm-image.base",
   ]
+}
+
+source "arm-image" "base" {
+  iso_url           = var.source_iso_url
+  iso_checksum      = var.source_iso_checksum
+  image_type        = "raspberrypi"
+  output_filename   = "${var.output_directory}/infra.img"
+  qemu_binary       = "qemu-aarch64-static"
+  target_image_size = 3 * 1024 * 1024 * 1024
 }
 
 build {

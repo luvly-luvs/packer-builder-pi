@@ -5,6 +5,7 @@
   },
   "material-icon-theme.files.associations": {
     "config-*": "console",
-    "config": "console"
+    "config": "console",
+    ".shellcheckrc": "console"
   }
 }

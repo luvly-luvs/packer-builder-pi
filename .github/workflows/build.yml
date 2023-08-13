@@ -35,11 +35,11 @@ jobs:
           touch ./stage4/SKIP_IMAGES ./stage5/SKIP_IMAGES
           cp ../config .
           sudo ./build.sh
-          ls -ah1
           ls -ah1 deploy
-          shasum -a 256 "$BASE_IMG_FILENAME" | sudo tee "$BASE_IMG_FILENAME".sha256
-          ls -ah1
+          ls -ah1 deploy/"$BASE_IMG_FILENAME"
+          shasum -a 256 *.img | sudo tee "$BASE_IMG_FILENAME".sha256
           ls -ah1 deploy
+          ls -ah1 deploy/"$BASE_IMG_FILENAME"
 
       - name: Setup Packer
         uses: hashicorp-contrib/setup-packer@v2

@@ -1,9 +1,7 @@
 IMG_DATE = $(shell date +%Y-%m-%d)
 IMG_NAME = $(shell bash -c 'source ./config; echo $$IMG_NAME')
 
-PI_GEN_DIR = pi-gen
-
-PI_GEN_DEPLOY_DIR = $(PI_GEN_DIR)/deploy
+PI_GEN_DEPLOY_DIR = deploy
 BASE_IMG_FILENAME = $(PI_GEN_DEPLOY_DIR)/$(IMG_DATE)-$(IMG_NAME).img
 
 FIRST_USER_NAME = $(shell bash -c 'source ./config; echo $$FIRST_USER_NAME')
@@ -21,7 +19,7 @@ RM = rm
 SUDO_TEE = $(SUDO) $(TEE)
 
 $(BASE_IMG_FILENAME):
-	cd $(PI_GEN_DIR) && $(SUDO) -E ./build.sh
+	$(SUDO) -E ./build.sh
 
 %.sha256: %
 	$(SHA256) $< | $(SUDO_TEE) $@

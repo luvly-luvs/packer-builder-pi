@@ -31,4 +31,9 @@ jobs:
           sudo apt-get update
           xargs sudo apt-get install -f <depends.txt
       - name: Make Images
-        run: mkdir deploy && make images
+        run: |
+          cp config* pi-gen/
+          cp Makefile pi-gen/
+          mv packer/ pi-gen/
+          cd pi-gen
+          make images

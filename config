@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+source config-base
+source config-packer
+source config-secrets

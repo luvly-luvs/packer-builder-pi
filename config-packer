@@ -1,0 +1,2 @@
+#!/usr/bin/env sh
+DEPLOY_COMPRESSION=none # disable output compression for the Packer ARM image plugin

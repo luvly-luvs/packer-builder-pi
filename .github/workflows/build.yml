@@ -42,7 +42,7 @@ jobs:
         run: |
           cd packer
           packer init .
-          source ./config
+          source ../config
           echo $IMG_NAME
           packer build \
           -var source_iso_url=./pi-gen/deploy/"$IMG_NAME" \

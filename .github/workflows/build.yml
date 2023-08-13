@@ -27,8 +27,11 @@ jobs:
           xargs sudo apt-get install -f <depends.txt
 
       - name: Make Image
-        run: make
         working-directory: ./pi-gen
+        run: |
+          cp ../config .
+          cp ../Makefile .
+          make
 
       - name: Setup Packer
         uses: hashicorp-contrib/setup-packer@v2

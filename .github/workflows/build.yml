@@ -29,17 +29,18 @@ jobs:
       - name: Make Image
         working-directory: ./pi-gen
         run: |
-          . ../config
-          BASE_IMG_FILENAME=deploy/"$IMG_NAME".img
           touch ./stage3/SKIP ./stage4/SKIP ./stage5/SKIP
           touch ./stage4/SKIP_IMAGES ./stage5/SKIP_IMAGES
+          cp -f ../EXPORT_IMAGE ./stage2/EXPORT_IMAGE
           cp ../config .
           sudo ./build.sh
           ls -ah1 deploy
-          ls -ah1 deploy/"$BASE_IMG_FILENAME"
-          shasum -a 256 *.img | sudo tee "$BASE_IMG_FILENAME".sha256
-          ls -ah1 deploy
-          ls -ah1 deploy/"$BASE_IMG_FILENAME"
+          ls -ah1 deploy/*_arm64-lite/
+
+      - name: Get SHA256 Checksum
+        run: |
+          . config
+          shasum -a 256 *.img | sudo tee "$IMG_NAME".img.sha256
 
       - name: Setup Packer
         uses: hashicorp-contrib/setup-packer@v2

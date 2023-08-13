@@ -1,0 +1,8 @@
+#!/bin/bash -e
+IMG_SUFFIX=""
+
+if [ "${USE_QEMU}" = "1" ]; then
+  IMG_SUFFIX="${IMG_SUFFIX}-qemu"
+fi
+
+export IMG_SUFFIX

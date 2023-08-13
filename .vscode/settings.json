@@ -1,11 +1,13 @@
 {
   "files.associations": {
     "config-*": "shellscript",
-    "config": "shellscript"
+    "config": "shellscript",
+    "EXPORT_*": "shellscript"
   },
   "material-icon-theme.files.associations": {
     "config-*": "console",
     "config": "console",
-    ".shellcheckrc": "console"
+    ".shellcheckrc": "console",
+    "EXPORT_*": "console"
   }
 }

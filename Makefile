@@ -25,7 +25,7 @@ $(BASE_IMG_FILENAME):
 	$(SHA256) $< | $(SUDO_TEE) $@
 
 images: $(BASE_IMG_FILENAME) $(BASE_IMG_FILENAME).sha256
-	cd packer && \
+	cd packer && $(PACKER) init packer && \
 		PACKER_CONFIG_DIR=$(PACKER_CONFIG_HOME) $(SUDO) -E \
 		$(PACKER) build \
 		-only=$(ONLY) \

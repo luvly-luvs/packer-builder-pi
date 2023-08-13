@@ -36,5 +36,4 @@ jobs:
           cp Makefile pi-gen/
           mv packer/ pi-gen/
           cd pi-gen
-          packer init packer
           make images

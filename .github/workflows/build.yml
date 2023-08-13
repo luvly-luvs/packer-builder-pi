@@ -41,7 +41,6 @@ jobs:
           ls -h1 deploy
 
       - name: Save SHA256 Checksum
-        if: steps.make_image.outcome.success
         env:
           ISO_URL: ${{ steps.make_image.outputs.iso_url }}
         working-directory: ./pi-gen/deploy
@@ -63,8 +62,8 @@ jobs:
           ISO_CHECKSUM=$(cut -d' ' -f1 <"$ISO_URL.sha256")
           packer init ./packer
           packer build \
-            -var source_iso_url="$ISO_URL" \
-            -var source_iso_checksum="$ISO_CHECKSUM" \
+            -var source_iso_url="./pi-gen/$ISO_URL" \
+            -var source_iso_checksum="./pi-gen/$ISO_CHECKSUM" \
             ./packer
 
       - name: Upload Artifacts

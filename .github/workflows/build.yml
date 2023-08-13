@@ -27,8 +27,12 @@ jobs:
           sudo apt-get update
           xargs sudo apt-get install -f <depends.txt
 
-      - name: Link Make Repository
-        run: makepp -R pi-gen=. -F pi-gen
+      - name: Move Build Files
+        run: |
+          mv config pi-gen/
+          mv Makefile pi-gen/
 
-      - name: Make & Pack Image
-        run: make
+      - name: Make Image
+        run: |
+          cd pi-gen
+          make

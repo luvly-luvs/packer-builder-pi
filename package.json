@@ -4,12 +4,7 @@
   "description": "Packer & Pi-Gen pipeline for building Pi images",
   "main": "index.ts",
   "scripts": {
-    "install:apt": "xargs sudo apt-get install <depends.txt",
-    "install:pi-gen": "git clone --branch arm64 git@github.com:RPi-Distro/pi-gen.git tmp/pi-gen",
-    "install:node": "rm -rf node_modules && npm i",
-    "build:nuke": "rm -rf tmp deploy && mkdir tmp deploy",
-    "build:ci": "npm run build:nuke && make images",
-    "build:local": "npm run build:nuke && npm run install:pi-gen && make images",
+    "clean:node": "rm -rf node_modules && npm i",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

@@ -34,7 +34,9 @@ jobs:
           touch ./stage3/SKIP ./stage4/SKIP ./stage5/SKIP
           touch ./stage4/SKIP_IMAGES ./stage5/SKIP_IMAGES
           cp ../config .
-          sudo -E ./build.sh
+          sudo ./build.sh
+          ls -ah1
+          ls -ah1 deploy
           shasum -a 256 "$BASE_IMG_FILENAME" | sudo tee "$BASE_IMG_FILENAME".sha256
           ls -ah1
           ls -ah1 deploy

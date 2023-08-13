@@ -22,6 +22,7 @@ deploy/
 
 # For large plugin binaries
 packer/bin/
+packer/packer-plugin-arm-image
 
 # Logs
 logs

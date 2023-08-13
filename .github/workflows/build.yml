@@ -37,7 +37,16 @@ jobs:
         working-directory: ./pi-gen
 
       - name: Pack Image
-        run: sh -c "./pack-image.sh"
+        run: |
+          . config
+          echo "$IMG_NAME"
+          ISO_URL="./pi-gen/deploy/$IMG_NAME"
+          ISO_CHECKSUM=$(cut -d' ' -f1 <"$ISO_URL".sha256)
+          packer init ./packer
+          packer build \
+            -var source_iso_url="$ISO_URL" \
+            -var source_iso_checksum="$ISO_CHECKSUM" \
+            ./packer
 
       - name: Upload Image
         uses: actions/upload-artifact@v3

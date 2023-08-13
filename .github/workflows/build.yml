@@ -9,7 +9,6 @@ jobs:
     runs-on: buildjet-2vcpu-ubuntu-2204-arm
     defaults:
       run:
-        working-directory: .
         shell: bash
     steps:
       - name: Checkout This Repository
@@ -18,12 +17,9 @@ jobs:
       - name: Checkout Pi-Gen Repository
         uses: actions/checkout@v3
         with:
-          path: .
+          path: ./pi-gen
           repository: RPi-Distro/pi-gen
           ref: arm64
-
-      - name: List cwd
-        run: ls -ah1
 
       - name: Install Build Dependencies
         run: |
@@ -32,6 +28,7 @@ jobs:
 
       - name: Make Image
         run: make
+        working-directory: ./pi-gen
 
       - name: Setup Packer
         uses: hashicorp-contrib/setup-packer@v2

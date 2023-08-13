@@ -29,7 +29,7 @@ jobs:
 
       - name: Move Build Files
         run: |
-          mv config pi-gen/
+          cp config pi-gen/
           mv Makefile pi-gen/
 
       - name: Make Image

@@ -19,13 +19,6 @@ jobs:
           path: pi-gen
       - name: Setup Packer
         uses: hashicorp-contrib/setup-packer@v2
-      #      - name: Setup Packer
-      #        run: |
-      #          wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
-      #          echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
-      #          sudo apt-get update
-      #          sudo apt-get install -y -f packer
-      #          packer version
       - name: Setup Node
         uses: buildjet/setup-node@v3
         with:
@@ -34,6 +27,8 @@ jobs:
       - name: Install Node Dependencies
         run: npm ci
       - name: Install Build Dependencies
-        run: xargs sudo apt-get install <depends.txt
+        run: |
+          sudo apt-get update
+          xargs sudo apt-get install -f <depends.txt
       - name: Make Images
         run: mkdir deploy && make images

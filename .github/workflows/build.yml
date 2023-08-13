@@ -59,11 +59,11 @@ jobs:
           . config
           echo "$IMG_NAME"
           echo "$ISO_URL"
-          ISO_CHECKSUM=$(cut -d' ' -f1 <"$ISO_URL.sha256")
+          ISO_CHECKSUM=$(cut -d' ' -f1 <"./pi-gen/$ISO_URL.sha256")
           packer init ./packer
           packer build \
             -var source_iso_url="./pi-gen/$ISO_URL" \
-            -var source_iso_checksum="./pi-gen/$ISO_CHECKSUM" \
+            -var source_iso_checksum="$ISO_CHECKSUM" \
             ./packer
 
       - name: Upload Artifacts

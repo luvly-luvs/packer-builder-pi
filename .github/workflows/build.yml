@@ -1,0 +1,32 @@
+on: workflow_dispatch
+name: Build Image
+jobs:
+  build:
+    name: Build
+    runs-on: buildjet-2vcpu-ubuntu-2204-arm
+    defaults:
+      run:
+        working-directory: .
+        shell: bash
+    steps:
+      - name: Checkout This Repository
+        uses: actions/checkout@v3
+      - name: Checkout Pi-Gen Repository
+        uses: actions/checkout@v3
+        with:
+          repository: RPi-Distro/pi-gen
+          ref: arm64
+          path: pi-gen
+      - name: Setup Packer
+        uses: hashicorp-contrib/setup-packer@v1
+      - name: Setup Node
+        uses: buildjet/setup-node@v2
+        with:
+          node-version: 18
+          cache: npm
+      - name: Install Node Dependencies
+        run: npm ci
+      - name: Install Build Dependencies
+        run: xargs sudo apt-get install <depends.txt
+      - name: Make Images
+        run: mkdir deploy && make images

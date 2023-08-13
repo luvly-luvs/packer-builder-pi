@@ -8,9 +8,8 @@ variable "source_iso_url" {
 
 variable "operator_user_name" {
   description = "Operator user on the image"
-  default     = "pi"
 }
 
 variable "output_directory" {
-  default = "../deploy"
+  description = "Directory to output the image to"
 }

@@ -15,15 +15,14 @@ source "arm-image" "base" {
   iso_url           = var.source_iso_url
   iso_checksum      = var.source_iso_checksum
   image_type        = "raspberrypi"
-  output_filename   = "${var.output_directory}/infra.img"
+  output_filename   = "${var.output_directory}/${formatdate("YYYYMMDD-hhmmss", timestamp())}_arm64.img"
   qemu_binary       = "qemu-aarch64-static"
   target_image_size = 3 * 1024 * 1024 * 1024
 }
 
 build {
-  sources = local.builds
-
   name = "base"
+  sources = local.builds
 
   provisioner "shell" {
     script = "scripts/common.sh"

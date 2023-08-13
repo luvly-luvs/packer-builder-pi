@@ -11,25 +11,25 @@ jobs:
     steps:
       - name: Checkout This Repository
         uses: actions/checkout@v3
+
       - name: Checkout Pi-Gen Repository
         uses: actions/checkout@v3
         with:
           repository: RPi-Distro/pi-gen
           ref: arm64
           path: pi-gen
+
       - name: Setup Packer
         uses: hashicorp-contrib/setup-packer@v2
-      - name: Setup Node
-        uses: buildjet/setup-node@v3
-        with:
-          node-version: 18
-          cache: npm
-      - name: Install Node Dependencies
-        run: npm ci
+
       - name: Install Build Dependencies
         run: |
           sudo apt-get update
           xargs sudo apt-get install -f <depends.txt
+
+      - name: Link Make Repository
+        run: makepp -R pi-gen=. -F pi-gen
+
       - name: Make Images
         run: |
           cp config* pi-gen/

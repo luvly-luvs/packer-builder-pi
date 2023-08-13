@@ -1,6 +1,8 @@
 on: push
 name: Build Image
-concurrency: build-{{ github.ref_name }}
+concurrency:
+  group: build-{{ github.ref_name }}
+  cancel-in-progress: true
 env:
   generate-key: generate-arm64-${{ github.run_id }}
   build-key: build-arm64-${{ github.run_id }}

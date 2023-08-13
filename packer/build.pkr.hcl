@@ -9,7 +9,7 @@ source "arm-image" "base" {
 
 build {
   name = "base"
-  sources = builds = [
+  sources = [
     "source.arm-image.base",
   ]
 

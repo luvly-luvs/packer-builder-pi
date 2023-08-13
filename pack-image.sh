@@ -9,6 +9,6 @@ ISO_CHECKSUM=$(cut -d' ' -f1 <"$ISO_URL".sha256)
 
 packer init ./packer
 packer build \
-	-var source_iso_url="$ISO_URL" \
-	-var source_iso_checksum="$ISO_CHECKSUM" \
-	./packer
+  -var source_iso_url="$ISO_URL" \
+  -var source_iso_checksum="$ISO_CHECKSUM" \
+  ./packer

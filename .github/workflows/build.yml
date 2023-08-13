@@ -33,21 +33,11 @@ jobs:
           mv Makefile pi-gen/
 
       - name: Make Image
-        run: |
-          cd pi-gen
-          make
-          cd ..
+        run: make
+        working-directory: ./pi-gen
 
       - name: Pack Image
-        run: |
-          cd packer
-          packer init .
-          source ../config
-          echo $IMG_NAME
-          packer build \
-          -var source_iso_url=./pi-gen/deploy/"$IMG_NAME" \
-          -var source_iso_checksum=$(cut -d' ' -f1 < ./pi-gen/deploy/"$IMG_NAME".sha256) \
-          .
+        run: sh -c "./pack-image.sh"
 
       - name: Upload Image
         uses: actions/upload-artifact@v3

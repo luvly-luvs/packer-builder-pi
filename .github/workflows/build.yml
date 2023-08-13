@@ -36,3 +36,20 @@ jobs:
         run: |
           cd pi-gen
           make
+          cd ..
+
+      - name: Pack Image
+        run: |
+          cd packer
+          packer init .
+          echo "$IMG_NAME"
+          packer build \
+          -var source_iso_url=./pi-gen/deploy/"$IMG_NAME" \
+          -var source_iso_checksum=$(cut -d' ' -f1 < ./pi-gen/deploy/"$IMG_NAME".sha256) \
+          .
+
+      - name: Upload Image
+        uses: actions/upload-artifact@v3
+        with:
+          name: arm64-image-${{ github.run_id }}
+          path: packer/*_arm64.img

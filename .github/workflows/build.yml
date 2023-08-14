@@ -32,9 +32,10 @@ jobs:
         id: make_image
         working-directory: ./pi-gen
         run: |
-          touch ./stage3/SKIP ./stage4/SKIP ./stage5/SKIP
+          touch ./stage4/SKIP ./stage5/SKIP
           touch ./stage4/SKIP_IMAGES ./stage5/SKIP_IMAGES
-          cp -f ../EXPORT_IMAGE ./stage2/EXPORT_IMAGE
+          cp -R -f ../stage2 ./stage2
+          cp -R -f ../stage3 ./stage3
           cp ../config .
           sudo ./build.sh
           echo "iso_url=$(ls -1 deploy/*.img | tail -n 1)" >>"$GITHUB_OUTPUT"
@@ -46,27 +47,11 @@ jobs:
         working-directory: ./pi-gen
         run: shasum -a 256 "$ISO_URL" | sudo tee "$ISO_URL.sha256"
 
-      - name: Setup Packer
-        uses: hashicorp-contrib/setup-packer@v2
-
-      - name: Pack Image
-        env:
-          ISO_URL: ${{ steps.make_image.outputs.iso_url }}
-        working-directory: ./packer
-        run: |
-          ISO_CHECKSUM=$(cut -d' ' -f1 <"../pi-gen/$ISO_URL.sha256")
-          sudo packer init .
-          sudo packer build \
-            -var source_iso_url="../pi-gen/$ISO_URL" \
-            -var source_iso_checksum="$ISO_CHECKSUM" \
-            .
-
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
           name: ${{ env.image-key }}
           path: |
-            packer/*.img
             deploy/*.img
             deploy/*.info
             deploy/*.sha256

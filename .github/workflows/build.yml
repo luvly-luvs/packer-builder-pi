@@ -55,8 +55,8 @@ jobs:
         working-directory: ./packer
         run: |
           ISO_CHECKSUM=$(cut -d' ' -f1 <"../pi-gen/$ISO_URL.sha256")
-          packer init .
-          packer build \
+          sudo packer init .
+          sudo packer build \
             -var source_iso_url="../pi-gen/$ISO_URL" \
             -var source_iso_checksum="$ISO_CHECKSUM" \
             .

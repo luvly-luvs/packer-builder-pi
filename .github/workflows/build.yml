@@ -43,7 +43,7 @@ jobs:
       - name: Save SHA256 Checksum
         env:
           ISO_URL: ${{ steps.make_image.outputs.iso_url }}
-        working-directory: ./pi-gen/deploy
+        working-directory: ./pi-gen
         run: |
           . config
           ISO_URL="./$(date +%F)-$IMG_NAME.img"

@@ -52,13 +52,14 @@ jobs:
       - name: Pack Image
         env:
           ISO_URL: ${{ steps.make_image.outputs.iso_url }}
+        working-directory: ./packer
         run: |
-          ISO_CHECKSUM=$(cut -d' ' -f1 <"pi-gen/$ISO_URL.sha256")
-          packer init ./packer
+          ISO_CHECKSUM=$(cut -d' ' -f1 <"../pi-gen/$ISO_URL.sha256")
+          packer init .
           packer build \
-            -var source_iso_url="pi-gen/$ISO_URL" \
+            -var source_iso_url="../pi-gen/$ISO_URL" \
             -var source_iso_checksum="$ISO_CHECKSUM" \
-            ./packer
+            .
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3

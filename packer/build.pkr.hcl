@@ -14,18 +14,18 @@ build {
   ]
 
   provisioner "shell" {
-    script = "scripts/common.sh"
+    script = "${path.cwd}/scripts/common.sh"
   }
 
   provisioner "shell" {
-    script = "scripts/systemd.sh"
+    script = "${path.cwd}/scripts/systemd.sh"
   }
 
   provisioner "shell" {
-    script = "scripts/systemd-post.sh"
+    script = "${path.cwd}/scripts/systemd-post.sh"
   }
 
   provisioner "shell" {
-    script = "scripts/wired-post.sh"
+    script = "${path.cwd}/scripts/wired-post.sh"
   }
 }

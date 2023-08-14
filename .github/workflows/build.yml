@@ -44,10 +44,7 @@ jobs:
         env:
           ISO_URL: ${{ steps.make_image.outputs.iso_url }}
         working-directory: ./pi-gen
-        run: |
-          . config
-          ISO_URL="./$(date +%F)-$IMG_NAME.img"
-          shasum -a 256 "$ISO_URL" | sudo tee "$ISO_URL.sha256"
+        run: shasum -a 256 "$ISO_URL" | sudo tee "$ISO_URL.sha256"
 
       - name: Setup Packer
         uses: hashicorp-contrib/setup-packer@v2
@@ -56,13 +53,10 @@ jobs:
         env:
           ISO_URL: ${{ steps.make_image.outputs.iso_url }}
         run: |
-          . config
-          echo "$IMG_NAME"
-          echo "$ISO_URL"
-          ISO_CHECKSUM=$(cut -d' ' -f1 <"./pi-gen/$ISO_URL.sha256")
+          ISO_CHECKSUM=$(cut -d' ' -f1 <"pi-gen/$ISO_URL.sha256")
           packer init ./packer
           packer build \
-            -var source_iso_url="./pi-gen/$ISO_URL" \
+            -var source_iso_url="pi-gen/$ISO_URL" \
             -var source_iso_checksum="$ISO_CHECKSUM" \
             ./packer
 

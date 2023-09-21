@@ -1,29 +1,41 @@
-on: workflow_dispatch
-name: Build Image
-concurrency:
-  group: build-{{ github.ref_name }}
-  cancel-in-progress: true
+name: Build IoT Image
+
+on:
+  workflow_dispatch:
+  workflow_call:
+    outputs:
+      image-key:
+        description: "The artifact key used to store the IoT device image"
+        value: ${{ jobs.build-stages.outputs.image-key }}
+
 env:
-  image-key: image-arm64-${{ github.run_id }}
+  GHA_SCRIPTS_DIR: ${{ github.workspace }}/.github/scripts
+
 jobs:
-  generate:
-    name: Generate
+  build-stages:
+    name: Build & Deploy IoT Image
     runs-on: buildjet-2vcpu-ubuntu-2204-arm
+    outputs:
+      image-key: ${{ steps.image-key.outputs.key }}
     defaults:
       run:
         shell: bash
     steps:
-      - name: Checkout This Repository
+      - name: Export Artifact Key
+        id: image-key
+        run: echo "key=iot-image-${{ github.run_id }}" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Install Build Dependencies
-        run: |
-          sudo apt-get update
-          xargs sudo apt-get install -f <depends.txt
+      - name: Setup Packer
+        uses: hashicorp-contrib/setup-packer@v2
 
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ env.image-key }}
-          path: |
-            build/*.img
+      - name: Setup Action Permissions
+        run: sudo chmod +x ${{ env.GHA_SCRIPTS_DIR }}/*.sh
+
+      - name: Pack & Compress Image with IoT Client
+        id: packer
+        env:
+          UI_FILE_NAME: "levelup-ui.deb"
+        run: sudo -E ${{ env.GHA_SCRIPTS_DIR }}/build.sh

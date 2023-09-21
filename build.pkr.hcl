@@ -6,7 +6,7 @@ packer {
     }
 
     ansible = {
-      version = ">= 1.1.0"
+      version = "~> 1.1.0"
       source  = "github.com/hashicorp/ansible"
     }
   }
@@ -29,7 +29,7 @@ build {
   sources = ["source.arm-image.raspberry_pi_os"]
 
   provisioner "ansible" {
-    playbook_file    = "ansible/bootstrap.playbook.yml"
+    playbook_file    = "./ansible/bootstrap.playbook.yml"
     ansible_env_vars = [
       "ANSIBLE_FORCE_COLOR=1",
       "PYTHONUNBUFFERED=1",

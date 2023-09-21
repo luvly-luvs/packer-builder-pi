@@ -1,3 +1,12 @@
+packer {
+  required_plugins {
+    arm-image = {
+      source  = "github.com/solo-io/arm-image"
+      version = "~> 0.2.7"
+    }
+  }
+}
+
 source "arm-image" "raspberry_pi_os" {
   chroot_mounts = [
     ["proc", "proc", "/proc"],
@@ -8,6 +17,7 @@ source "arm-image" "raspberry_pi_os" {
   ]
   iso_checksum = "sha256:b5e3a1d984a7eaa402a6e078d707b506b962f6804d331dcc0daa61debae3a19a"
   iso_url      = "https://downloads.raspberrypi.org/raspios_lite_armhf/images/raspios_lite_armhf-2023-05-03/2023-05-03-raspios-bullseye-armhf-lite.img.xz"
+  target_image_size    = 5368709120
 }
 
 build {

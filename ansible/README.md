@@ -2,17 +2,16 @@
 
 ## Overview
 
-The provided playbook and inventories are intended to be used to deploy a standalone DMP Intercom instance. The playbook will enable, install, and/or configure the following components:
+The provided playbook and inventories are intended to be used to deploy a standalone device instance. The playbook will enable, install, and/or configure the following components:
 
 * Timezone
 * Locale
 * SSH
 * Packages (apt-get)
-* WM8960 Soundcard
-* Telephone Entry UI
+* Soundcard
 * Users & Groups
 * Peripherals/Hardware
-* GUI (X11)
+* GUI App
 * Auto-login
 
 ## Setup

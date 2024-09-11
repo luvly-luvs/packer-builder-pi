@@ -1,4 +1,4 @@
-# Standalone DMP Intercom - Ansible Playbook Strategy
+# Standalone Embedded Device - Ansible Playbook Strategy
 
 ## Overview
 
